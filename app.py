@@ -37,7 +37,7 @@ def add_one_user():
 
         touslescountry= query_db("select * from country")
 
-        one_user = query_db("insert into user (username,phone,email,country_id) values (:username,:phone,:email,:country_id)",hey)
+        one_user = query_db("insert into user (password,username,phone,email,country_id) values (:password,:username,:phone,:email,:country_id)",hey)
         user = query_db('select * from user')
 
         last_user = query_db("select * from user where email = ? and password = ?",[hey["email"], hey["password"]], one=True)
@@ -95,14 +95,14 @@ def add_one_iphoneidentity():
         touslesuser= query_db("select * from user")
 
         one_user = query_db("insert into iphoneidentity (user_id,pic) values (:user_id,:pic)",hey)
-        user = query_db('select * from iphoneidentity')
+        user = query_db('select i.*, country.name countryname from iphoneidentity i left outer join user u on u.id = i.user_id left outer join country on country.id = u.country_id')
 
         return render_template("iphoneidentityform.html", iphoneidentitys=user, one_user=one_user, the_title="add new iphoneidentity", touslesuser=touslesuser)
 
 
     touslesuser= query_db("select * from user")
 
-    user = query_db('select * from iphoneidentity')
+    user = query_db('select i.*, country.name countryname from iphoneidentity i left outer join user u on u.id = i.user_id left outer join country on country.id = u.country_id')
     one_user = query_db("select * from iphoneidentity limit 1", one=True)
     return render_template("iphoneidentityform.html", iphoneidentitys=user, one_user=one_user, the_title="add new iphoneidentity", touslesuser=touslesuser)
 

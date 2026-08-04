@@ -30,6 +30,7 @@ create table if not exists user(
         id integer primary key autoincrement,
         username text,
             phone text,
+            password text,
             email text,
             country_id text
       , created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP                );
